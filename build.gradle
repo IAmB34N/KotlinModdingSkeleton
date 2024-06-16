@@ -97,7 +97,9 @@ dependencies {
     // Use the latest version of Minecraft Forge
     minecraft "net.minecraftforge:forge:$minecraft_version-$forge_version"
 
-    implementation group: "thedarkcolour", name: "kotlinforforge", version: kff_version, changing: true
+    implementation group: "thedarkcolour", name: "kfflang", version: kff_version, changing: true
+    implementation group: "thedarkcolour", name: "kfflib", version: kff_version, changing: true
+    implementation group: "thedarkcolour", name: "kffmod", version: kff_version, changing: true
 
     // Hack fix for now, force jopt-simple to be exactly 5.0.4 because Mojang ships that version, but some transitive dependencies request 6.0+
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
@@ -162,6 +164,7 @@ sourceSets.each {
     def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
     it.output.resourcesDir = dir
     it.java.destinationDirectory = dir
+    it.kotlin.destinationDirectory = dir
 }
 
 idea {
