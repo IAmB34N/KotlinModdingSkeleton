@@ -1,6 +1,10 @@
 package example.examplemod
 
 import example.examplemod.block.ModBlocks
+import kotlinx.coroutines.*
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import net.minecraft.client.Minecraft
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
@@ -10,6 +14,7 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import thedarkcolour.kotlinforforge.forge.runForDist
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Main mod class. Should be an `object` declaration annotated with `@Mod`.
@@ -42,6 +47,22 @@ object ExampleMod {
             })
 
         println(obj)
+
+        @Serializable
+        data class MySerializedThing(
+            val name: String,
+            val number: Int
+        )
+        val testObject = MySerializedThing("KotlinForForge", 712)
+        val json = Json.encodeToString(testObject)
+        LOGGER.log(Level.INFO, "--- JSON: $json")
+
+        // sample coroutines code
+        CoroutineScope(Dispatchers.Default).launch {
+            LOGGER.log(Level.INFO, "Before delay")
+            delay(5.seconds)
+            LOGGER.log(Level.INFO, "After 5 seconds")
+        }
     }
 
     /**
